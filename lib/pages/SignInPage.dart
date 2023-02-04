@@ -1,3 +1,4 @@
+import 'package:blooddonate/pages/HomePage.dart';
 import 'package:blooddonate/pages/SignUpPage.dart';
 import 'package:blooddonate/providers/ShowPassProvider.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,12 @@ class _SignInPageState extends State<SignInPage> {
                         height: 40,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
+                        },
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Container(
