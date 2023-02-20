@@ -1,6 +1,11 @@
+import 'package:blooddonate/Modals/UserModel.dart';
 import 'package:blooddonate/pages/HomePage.dart';
+import 'package:blooddonate/pages/MainPage.dart';
 import 'package:blooddonate/pages/SignUpPage.dart';
 import 'package:blooddonate/providers/ShowPassProvider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -112,10 +117,9 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                          signInUser(
+                              email: _emailController.text,
+                              password: _passwordController.text);
                         },
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
@@ -207,5 +211,21 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  void signInUser({required String email, required String password}) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) async {
+      await FirebaseFirestore.instance
+          .collection("UserData")
+          .doc(value.user!.uid)
+          .get()
+          .then((value) {
+        print(value);
+        UserDataList.usersList.add(UserModal.fromSnapshot(value));
+        Get.to(const MainPAge());
+      });
+    });
   }
 }

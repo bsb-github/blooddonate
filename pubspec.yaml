@@ -48,6 +48,12 @@ dependencies:
   geolocator: ^9.0.2
   country_picker: ^2.0.19
   image_picker: ^0.8.6
+  flutter_rating_bar: ^4.0.1
+  roundcheckbox: ^2.0.5
+  sidebarx: ^0.14.0
+  group_radio_button: ^1.3.0
+  dropdown_search: ^5.0.5
+
 
 dev_dependencies:
   flutter_test:

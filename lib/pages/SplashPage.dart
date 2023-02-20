@@ -1,10 +1,16 @@
 import 'package:blooddonate/Modals/LocationModal.dart';
+import 'package:blooddonate/pages/MainPage.dart';
 import 'package:blooddonate/pages/NoInternetConnectionPage.dart';
 import 'package:blooddonate/pages/SignInPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+
+import '../Modals/UserModel.dart';
+import 'HomePage.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -17,13 +23,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // TODO: implement initState
-    Position pos;
-    print(_determinePosition().then((value) {
-      pos = value;
-      print(pos.latitude.toString());
-      print(pos.longitude.toString());
-    }));
-
+    _determinePosition();
     Future.delayed(const Duration(seconds: 2)).then((value) {
       checkInternetCon();
     });
@@ -65,8 +65,21 @@ class _SplashPageState extends State<SplashPage> {
         connectivityResult == ConnectivityResult.wifi) {
       // Navigate to Required Page
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const SignInPage()));
+      if (FirebaseAuth.instance.currentUser != null) {
+        var user = FirebaseAuth.instance.currentUser;
+        await FirebaseFirestore.instance
+            .collection("UserData")
+            .doc(user!.uid)
+            .get()
+            .then((value) {
+          print(value);
+          UserDataList.usersList.add(UserModal.fromSnapshot(value));
+          Get.to(const MainPAge());
+        });
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const SignInPage()));
+      }
     } else {
       Navigator.pushReplacement(
           context,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640043252981",
+    "project_id": "gdscbloodbank",
+    "storage_bucket": "gdscbloodbank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640043252981:android:0fdf9d01b892af3e11d9bc",
+        "android_client_info": {
+          "package_name": "com.example.blooddonate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640043252981-qg04r5tki47226q68ulccin046q98cg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIIitqC8-5dBWD2qwswVhUhiewAFy0LUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640043252981-qg04r5tki47226q68ulccin046q98cg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
